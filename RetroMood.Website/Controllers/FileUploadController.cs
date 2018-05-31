@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using CsvHelper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RetroMood.Website.Utils;
 
 namespace RetroMood.Website.Controllers
 {
@@ -43,6 +45,11 @@ namespace RetroMood.Website.Controllers
                     await file.CopyToAsync(stream);
                 }
             }
+
+            // read csv 
+            var csvProvider = new CsvProvider();
+            csvProvider.ReadFile(fullUploadPath);
+
 
             // process uploaded files
             // Don't rely on or trust the FileName property without validation.

@@ -18,4 +18,8 @@
     <Folder Include="wwwroot\uploads\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\RetroMood.Sentiment.Provider\RetroMood.Sentiment.Provider.csproj" />
+  </ItemGroup>
+
 </Project>
