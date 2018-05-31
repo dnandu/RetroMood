@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2043
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroMood.Sentiment.Provider", "RetroMood.Sentiment.Provider\RetroMood.Sentiment.Provider.csproj", "{60F8C707-6836-4F30-BE0B-9566609BFBAE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RetroMood.Sentiment.Provider", "RetroMood.Sentiment.Provider\RetroMood.Sentiment.Provider.csproj", "{60F8C707-6836-4F30-BE0B-9566609BFBAE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RetroMood.Website", "RetroMood.Website\RetroMood.Website.csproj", "{DFB28781-F1AA-4722-AD86-E1A9132315EE}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{60F8C707-6836-4F30-BE0B-9566609BFBAE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{60F8C707-6836-4F30-BE0B-9566609BFBAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{60F8C707-6836-4F30-BE0B-9566609BFBAE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DFB28781-F1AA-4722-AD86-E1A9132315EE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DFB28781-F1AA-4722-AD86-E1A9132315EE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DFB28781-F1AA-4722-AD86-E1A9132315EE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DFB28781-F1AA-4722-AD86-E1A9132315EE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
