@@ -47,7 +47,7 @@ namespace RetroMood.Website.Controllers
             }
 
             // read csv 
-            var csvProvider = new CsvProvider();
+            var csvProvider = new RetroBoardCsvProvider();
             csvProvider.ReadFile(fullUploadPath);
 
 

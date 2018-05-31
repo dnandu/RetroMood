@@ -9,8 +9,17 @@ using RetroMood.Sentiment.Provider.ViewModels;
 
 namespace RetroMood.Website.Utils
 {
-    public class CsvProvider
+    public class RetroBoardCsvProvider
     {
+        private readonly string _messageDelimiter = "-";
+
+        public RetroBoardCsvProvider(string messageDelimiter)
+        {
+            _messageDelimiter = messageDelimiter;
+        }
+
+        public RetroBoardCsvProvider() { }
+
         public IEnumerable<string> ReadFile(string fullFilePath)
         {
             List<string> messages = new List<string>();
@@ -21,21 +30,18 @@ namespace RetroMood.Website.Utils
             csvReader.ReadHeader();
             while (csvReader.Read())
             {
-                //var record = csvReader[0];
                 // get entire record line
                 var record = csvReader.Context.Record;
+                // remove empty strings
                 messages.AddRange(record.Where(x=>!string.IsNullOrEmpty(x)));
             }
-
             return messages;
         }
 
         public IEnumerable<MessageViewModel> GetMessagesFromFlatContent(IEnumerable<string> flatContent)
         {
-            var result = flatContent.Select(x => new MessageViewModel()
-            {
-                Author = x.Split("-")
-            })
+            var messages = flatContent.Select(x => x.Split(_messageDelimiter)).Where(y => y.Length == 2).Select(z => new MessageViewModel() { Author = z[0], Content = z[1] });
+            return messages;
         }
     }
 }
