@@ -22,4 +22,10 @@
     <ProjectReference Include="..\RetroMood.Sentiment.Provider\RetroMood.Sentiment.Provider.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Content Update="wwwroot\uploads\ArezzoHackDayTest.csv">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
 </Project>
