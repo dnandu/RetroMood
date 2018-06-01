@@ -15,7 +15,7 @@
                     <ul class="list-group">
                         @foreach (var message in authorItem.Messages)
                         {
-                            <li>@message.Content</li>
+                            <li class="list-group-item">@message.Content - Mood @message.Sentiment.Compound</li>
                         }
                     </ul>
                 </li>
