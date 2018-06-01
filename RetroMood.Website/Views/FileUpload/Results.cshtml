@@ -1,0 +1,25 @@
+﻿@using RetroMood.Sentiment.Provider.ViewModels
+@model IEnumerable<AuthorMessagesViewModel>
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <h2>Application uses</h2>
+        @foreach(var authorItem in Model)
+        { 
+            <ul class="list-group">
+                <li class="list-group-item">
+                    @authorItem.Author  - Mood @authorItem.AverageSentimentCompound <span class="badge">@authorItem.Messages.Count()</span>
+                    <ul class="list-group">
+                        @foreach (var message in authorItem.Messages)
+                        {
+                            <li>@message.Content</li>
+                        }
+                    </ul>
+                </li>
+            </ul>
+        }
+    </div>
+</div>

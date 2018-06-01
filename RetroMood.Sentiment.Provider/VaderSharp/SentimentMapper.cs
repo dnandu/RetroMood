@@ -12,7 +12,7 @@ namespace RetroMood.Sentiment.Provider.VaderSharp
                 Positive = result.Positive,
                 Negative = result.Negative,
                 Neutral = result.Neutral,
-                Compound = result.Compound
+                Compound = result.Compound * 100
             };
         }
     }

@@ -3,58 +3,70 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using CsvHelper;
+using System.Web;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using RetroMood.Website.Utils;
+using RetroMood.Sentiment.Provider;
+using RetroMood.Sentiment.Provider.FunRetro;
 
 namespace RetroMood.Website.Controllers
 {
-    [Produces("application/json")]
-    [Route("api/FileUpload")]
     public class FileUploadController : Controller
     {
-        private readonly IHostingEnvironment hostingEnvironment;
+        private const string _uploadFolder = "uploads";
+        private readonly IHostingEnvironment _hostingEnvironment;
+        private readonly ISentimentService _sentimentService;
 
-        public FileUploadController(IHostingEnvironment hostingEnvironment)
+        public FileUploadController(IHostingEnvironment hostingEnvironment, ISentimentService sentimentService)
         {
-            this.hostingEnvironment = hostingEnvironment;
+            _hostingEnvironment = hostingEnvironment;
+            _sentimentService = sentimentService;
         }
 
-
-        //https://docs.microsoft.com/en-us/aspnet/core/mvc/models/file-uploads?view=aspnetcore-2.1
-        [HttpPost("UploadFiles")]
-        public async Task<IActionResult> Post(List<IFormFile> files)
+        // POST: FileUpload/Create
+        [HttpPost]
+        public async Task<IActionResult> UploadFiles(List<IFormFile> files)
         {
-            long size = files.Sum(f => f.Length);
-
-            if (!files.Any())
-                return NotFound();
-
-            //get the first file only
-            var file = files.First();
-
-            // full path to file in upload folder 
-            var fullUploadPath = Path.Combine(this.hostingEnvironment.WebRootPath, "uploads", file.FileName);
-
-            if (file.Length > 0)
+            try
             {
-                using (var stream = new FileStream(fullUploadPath, FileMode.Create))
+                // TODO: Add insert logic here
+                long size = files.Sum(f => f.Length);
+
+                if (!files.Any())
+                    return NotFound();
+
+                //get the first file only
+                var file = files.First();
+
+                // full path to file in upload folder 
+                var fullUploadPath = Path.Combine(_hostingEnvironment.WebRootPath, _uploadFolder, file.FileName);
+              
+                if (file.Length > 0)
                 {
-                    await file.CopyToAsync(stream);
+                    using (var stream = new FileStream(fullUploadPath, FileMode.Create))
+                    {
+                        await file.CopyToAsync(stream);
+                    }
                 }
+                
+                
+                return RedirectToAction(nameof(Results), new { filename = HttpUtility.UrlEncode(file.FileName)});
             }
+            catch
+            {
+                // TODO: add error page
+                return View();
+            }
+        }
 
-            // read csv 
-            var csvProvider = new RetroBoardCsvProvider();
-            csvProvider.ReadFile(fullUploadPath);
-
-
-            // process uploaded files
-            // Don't rely on or trust the FileName property without validation.
-
-            return Ok(new { count = files.Count, size, fullUploadPath });
+        [HttpGet]
+        public IActionResult Results(string filename)
+        {
+            var fileNameDecoded = HttpUtility.UrlDecode(filename);
+            var fullUploadPath = Path.Combine(_hostingEnvironment.WebRootPath, _uploadFolder, fileNameDecoded);
+            var model = new FunRetroSentimentService(_sentimentService).GetAuthorMessagesWithSentimentFromCsv(fullUploadPath);
+            return View(model);
         }
     }
 }
